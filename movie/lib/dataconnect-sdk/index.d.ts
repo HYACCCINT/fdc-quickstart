@@ -380,6 +380,10 @@ export interface GetUserByIdResponse {
           releaseYear?: number | null;
           rating?: number | null;
           description?: string | null;
+          tags?: string[] | null;
+          metadata: ({
+            director?: string | null;
+          })[];
         } & Movie_Key;
       })[];
         favoriteMovies: ({
@@ -391,6 +395,10 @@ export interface GetUserByIdResponse {
             releaseYear?: number | null;
             rating?: number | null;
             description?: string | null;
+            tags?: string[] | null;
+            metadata: ({
+              director?: string | null;
+            })[];
           } & Movie_Key;
         })[];
           favoriteActors: ({
@@ -654,6 +662,8 @@ export interface MoviesRecentlyReleasedResponse {
     title: string;
     rating?: number | null;
     imageUrl: string;
+    genre?: string | null;
+    tags?: string[] | null;
   } & Movie_Key)[];
 }
 
@@ -663,6 +673,8 @@ export interface MoviesTop10Response {
     title: string;
     imageUrl: string;
     rating?: number | null;
+    genre?: string | null;
+    tags?: string[] | null;
     metadata: ({
       director?: string | null;
     })[];
@@ -671,6 +683,11 @@ export interface MoviesTop10Response {
         name: string;
         imageUrl: string;
       } & Actor_Key)[];
+        supportingActors: ({
+          id: UUIDString;
+          name: string;
+          imageUrl: string;
+        } & Actor_Key)[];
   } & Movie_Key)[];
 }
 

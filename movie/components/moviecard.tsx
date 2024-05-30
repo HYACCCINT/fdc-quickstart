@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { MdFavorite, MdFavoriteBorder, MdCheck, MdCheckBoxOutlineBlank, MdStar } from 'react-icons/md';
+import { MdFavorite, MdFavoriteBorder, MdCheck, MdAdd, MdStar } from 'react-icons/md';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { addFavoritedMovie, deleteFavoritedMovie, addWatchedMovie, deleteWatchedMovie, getIfWatched, getIfFavoritedMovie } from '../lib/dataconnect-sdk';
 
@@ -9,10 +9,11 @@ interface MovieCardProps {
   title: string;
   imageUrl?: string;
   rating?: number;
+  genre?: string;
   tags?: string[];
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, tags }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, genre, tags }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isFavorited, setIsFavorited] = useState(false);
   const [isWatched, setIsWatched] = useState(false);
@@ -80,6 +81,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, tags
     }
   };
 
+  const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-1000 transform hover:scale-105 cursor-pointer w-64">
       <Link href={`/movie/${id}`} passHref>
@@ -91,13 +94,20 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, tags
               <MdStar className="text-yellow-500" size={20} />
               <span className="ml-1 text-gray-400">{rating}</span>
             </div>
-            <div className="mt-2 flex flex-wrap gap-1">
-              {tags?.map((tag, index) => (
-                <span key={index} className="bg-gray-700 text-white px-2 py-1 rounded-full text-xs">{tag}</span>
-              ))}
+            <div className="mt-2 text-gray-400">
+              {genre && (
+                <Link href={`/genre/${genre.toLowerCase()}`} passHref legacyBehavior>
+                  <a className="block mb-1 hover:underline">{capitalize(genre)}</a>
+                </Link>
+              )}
+              <div className="flex flex-wrap gap-1">
+                {tags?.map((tag, index) => (
+                  <span key={index} className="bg-gray-700 text-white px-2 py-1 rounded-full text-xs">{capitalize(tag)}</span>
+                ))}
+              </div>
             </div>
             {user && (
-              <div className="mt-2 flex space-x-2">
+              <div className="mt-2 flex space-x-2 items-center">
                 <button
                   className="flex items-center justify-center p-1 text-red-500 hover:text-red-600 transition-colors duration-200"
                   aria-label="Favorite"
@@ -110,7 +120,17 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, imageUrl, rating, tags
                   aria-label="Watched"
                   onClick={handleWatchedToggle}
                 >
-                  {isWatched ? <MdCheck size={20} /> : <MdCheckBoxOutlineBlank size={20} />}
+                  {isWatched ? (
+                    <>
+                      <MdCheck size={20} />
+                      <span className="ml-1 text-sm">Watched</span>
+                    </>
+                  ) : (
+                    <>
+                      <MdAdd size={20} />
+                      <span className="ml-1 text-sm">Add to watchlist</span>
+                    </>
+                  )}
                 </button>
               </div>
             )}

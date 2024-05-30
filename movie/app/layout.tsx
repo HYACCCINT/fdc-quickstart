@@ -1,7 +1,6 @@
-'use client'
-// import '../styles/globals.css';
-import Navbar from '../components/navbar';
-import '../styles.css'
+"use client";
+import Navbar from "../components/navbar";
+import "../styles.css";
 export default function RootLayout({
   children,
 }: {
@@ -11,7 +10,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Navbar />
-        {children}
+        <div className="bg-gray-800 min-h-screen min-w-screen flex justify-center items-center">
+          {children}
+        </div>
       </body>
     </html>
   );

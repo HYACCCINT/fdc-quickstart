@@ -277,10 +277,17 @@ query MoviesTop10 @auth(level: PUBLIC) {
     title
     imageUrl
     rating
+    genre
+    tags
     metadata: movieMetadatas_on_movie {
       director
     }
     mainActors: actors_via_MovieActor(where: { role: { eq: "main" } }) {
+      id
+      name
+      imageUrl
+    }
+    supportingActors: actors_via_MovieActor(where: { role: { eq: "supporting" } }) {
       id
       name
       imageUrl
@@ -308,6 +315,8 @@ query MoviesRecentlyReleased @auth(level: PUBLIC) {
     title
     rating
     imageUrl
+    genre
+    tags
   }
 }
 
@@ -418,6 +427,10 @@ query GetUserById($id: String!) @auth(level: USER) {
         releaseYear
         rating
         description
+        tags
+        metadata: movieMetadatas_on_movie {
+          director
+        }
       }
     }
     favoriteMovies: favoriteMovies_on_user {
@@ -429,6 +442,10 @@ query GetUserById($id: String!) @auth(level: USER) {
         releaseYear
         rating
         description
+        tags
+        metadata: movieMetadatas_on_movie {
+          director
+        }
       }
     }
     favoriteActors: favoriteActors_on_user {

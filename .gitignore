@@ -69,3 +69,4 @@ local
 .idx
 .vscode
 .firebaserc
+.DS_Store

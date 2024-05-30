@@ -8,6 +8,7 @@ interface CarouselProps {
     title?: string;
     imageUrl?: string;
     rating?: number;
+    genre?: string;
     tags?: string[];
   }[];
 }
@@ -24,6 +25,7 @@ const Carousel: React.FC<CarouselProps> = ({ title, movies }) => {
               title={movie.title}
               imageUrl={movie.imageUrl}
               rating={movie.rating}
+              genre={movie.genre}
               tags={movie.tags}
             />
           </div>
