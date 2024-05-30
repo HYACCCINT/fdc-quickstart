@@ -16,7 +16,6 @@ const Page = () => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user, "use1r");
         setAuthUser(user);
         fetchUserProfile(user.uid);
       } else {
