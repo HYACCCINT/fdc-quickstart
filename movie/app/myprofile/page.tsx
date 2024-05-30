@@ -19,7 +19,7 @@ const Page = () => {
         setAuthUser(user);
         fetchUserProfile(user.uid);
       } else {
-        router.push('/'); // Redirect to login page if not authenticated
+        router.push('/'); // Redirect to home page if not authenticated
       }
     });
 
